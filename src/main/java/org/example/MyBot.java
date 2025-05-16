@@ -13,7 +13,7 @@ public class MyBot extends TelegramLongPollingBot {
             String text = update.getMessage().getText();
             Long chatId = update.getMessage().getChatId();
 
-            if (chatId.equals("")) {
+            if (chatId.equals(chatId)) {
 
             }
 
@@ -23,12 +23,12 @@ public class MyBot extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return "Managementtask_bot";
+        return "";
     }
 
     @Override
     public String getBotToken() {
-        return "7787804258:AAF3A2N7O8UTfbxTMW5ByI4Y-MskAleqeJU";
+        return "";
     }
 
 
