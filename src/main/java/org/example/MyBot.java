@@ -23,12 +23,12 @@ public class MyBot extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return "";
+        return "TaskManagementproject_Bot";
     }
 
     @Override
     public String getBotToken() {
-        return "";
+        return "7634031460:AAEgiUsgrpnq4aljAsCz0pC9vDjI3HoEaRY";
     }
 
 
