@@ -21,7 +21,7 @@ public class MyBotService {
 
         KeyboardButton button1 = new KeyboardButton("To Do");
         KeyboardButton button2 = new KeyboardButton("In Progress");
-        KeyboardButton button3 = new KeyboardButton("Completed");
+        KeyboardButton button3 = new KeyboardButton("✅ Completed");
 
         row1.add(button1);
         row1.add(button2);
@@ -45,8 +45,9 @@ public class MyBotService {
         List<KeyboardRow> rowList = new ArrayList<>();
         KeyboardRow row1 = new KeyboardRow();
 
-        KeyboardButton button1 = new KeyboardButton("New Task");
-        KeyboardButton button2 = new KeyboardButton("All Tasks");
+        KeyboardButton button1 = new KeyboardButton("➕ New Task");
+        KeyboardButton button2 = new KeyboardButton("\uD83D\uDDD2 All Tasks");
+        KeyboardButton button3 = new KeyboardButton("⬅\uFE0F Back");
 
         row1.add(button1);
         row1.add(button2);
