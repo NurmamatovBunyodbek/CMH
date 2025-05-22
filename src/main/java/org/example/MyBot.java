@@ -9,7 +9,7 @@ import java.sql.*;
 
 public class MyBot extends TelegramLongPollingBot {
 
-    int ida = 10;
+    int ida = 12;
 
     Boolean addTask = false;
     Boolean nameTask = false;
@@ -187,6 +187,12 @@ public class MyBot extends TelegramLongPollingBot {
                             status = "⚪\uFE0F TO DO";
                         }else if(status.equals("URGENT")){
                             status = "\uD83D\uDFE1 URGENT";
+                        }else if (status.equals("IN PROGRESS")) {
+                            status = "\uD83D\uDFE2 IN PROGRESS";
+                        }else if(status.equals("COMPLETED")){
+                            status = "✅ COMPLETED";
+                        }else if(status.equals("LATE")){
+                            status = "\uD83D\uDD34 LATE";
                         }
 
                         Task tasks = new Task(id,name,description,users,startDate,dueDate,status);
@@ -202,12 +208,25 @@ public class MyBot extends TelegramLongPollingBot {
                             throw new RuntimeException(e);
                         }
                     }
+                    try {
+                        execute(myBotService.backMessage(chatId));
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
+                    }
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
             }
 
-            if (text.equals("\uD83D\uDDD2 All Tasks")) {
+            if(text.equals("Complete")){
+                try {
+                    execute(myBotService.menu(chatId));
+                } catch (TelegramApiException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            if (text.equals("In Progress")) {
                 try {
                     String databaseurl = "jdbc:postgresql://localhost:5432/taskmanagement";
                     String username = "postgres";
@@ -229,11 +248,11 @@ public class MyBot extends TelegramLongPollingBot {
                         if (status.equals("IN PROGRESS")) {
                             status = "\uD83D\uDFE2 IN PROGRESS";
 
-                            Task tasks = new Task(id, name, description, users, startDate, dueDate, status);
-                            System.out.println(tasks);
+                            Task task = new Task(id,name,description,users,startDate,dueDate,status);
+                            System.out.println(task);
 
                             SendMessage sendMessage = new SendMessage();
-                            sendMessage.setText(tasks.toString());
+                            sendMessage.setText(task.toString());
                             sendMessage.setChatId(chatId);
 
                             try {
@@ -242,6 +261,154 @@ public class MyBot extends TelegramLongPollingBot {
                                 throw new RuntimeException(e);
                             }
                         }
+                    }
+                    try {
+                        execute(myBotService.backMessage(chatId));
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            if (text.equals("Urgent")) {
+                try {
+                    String databaseurl = "jdbc:postgresql://localhost:5432/taskmanagement";
+                    String username = "postgres";
+                    String password = "root";
+
+                    Connection connection = DriverManager.getConnection(databaseurl, username, password);
+                    Statement statement = connection.createStatement();
+                    String query = "select * from tasks order by id";
+                    ResultSet resultSet = statement.executeQuery(query);
+                    while (resultSet.next()) {
+                        Integer id = resultSet.getInt(1);
+                        String name = resultSet.getString(2);
+                        String description = resultSet.getString(3);
+                        String users = resultSet.getString(4);
+                        String startDate = resultSet.getString(5);
+                        String dueDate = resultSet.getString(6);
+                        String status = resultSet.getString(7);
+
+                        if (status.equals("URGENT")) {
+                            status = "\uD83D\uDFE1 URGENT";
+
+                            Task task = new Task(id,name,description,users,startDate,dueDate,status);
+                            System.out.println(task);
+
+                            SendMessage sendMessage = new SendMessage();
+                            sendMessage.setText(task.toString());
+                            sendMessage.setChatId(chatId);
+
+                            try {
+                                execute(sendMessage);
+                            } catch (TelegramApiException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }
+                    try {
+                        execute(myBotService.backMessage(chatId));
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+
+
+
+            if (text.equals("Late")) {
+                try {
+                    String databaseurl = "jdbc:postgresql://localhost:5432/taskmanagement";
+                    String username = "postgres";
+                    String password = "root";
+
+                    Connection connection = DriverManager.getConnection(databaseurl, username, password);
+                    Statement statement = connection.createStatement();
+                    String query = "select * from tasks order by id";
+                    ResultSet resultSet = statement.executeQuery(query);
+                    while (resultSet.next()) {
+                        Integer id = resultSet.getInt(1);
+                        String name = resultSet.getString(2);
+                        String description = resultSet.getString(3);
+                        String users = resultSet.getString(4);
+                        String startDate = resultSet.getString(5);
+                        String dueDate = resultSet.getString(6);
+                        String status = resultSet.getString(7);
+
+                        if (status.equals("LATE")) {
+                            status = "\uD83D\uDD34 LATE";
+
+                            Task task = new Task(id,name,description,users,startDate,dueDate,status);
+                            System.out.println(task);
+
+                            SendMessage sendMessage = new SendMessage();
+                            sendMessage.setText(task.toString());
+                            sendMessage.setChatId(chatId);
+
+                            try {
+                                execute(sendMessage);
+                            } catch (TelegramApiException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }
+                    try {
+                        execute(myBotService.backMessage(chatId));
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+
+
+            if (text.equals("✅ Completed")) {
+                try {
+                    String databaseurl = "jdbc:postgresql://localhost:5432/taskmanagement";
+                    String username = "postgres";
+                    String password = "root";
+
+                    Connection connection = DriverManager.getConnection(databaseurl, username, password);
+                    Statement statement = connection.createStatement();
+                    String query = "select * from tasks order by id";
+                    ResultSet resultSet = statement.executeQuery(query);
+                    while (resultSet.next()) {
+                        Integer id = resultSet.getInt(1);
+                        String name = resultSet.getString(2);
+                        String description = resultSet.getString(3);
+                        String users = resultSet.getString(4);
+                        String startDate = resultSet.getString(5);
+                        String dueDate = resultSet.getString(6);
+                        String status = resultSet.getString(7);
+
+                        if (status.equals("COMPLETED")) {
+                            status = "✅ COMPLETED";
+
+                            Task task = new Task(id,name,description,users,startDate,dueDate,status);
+                            System.out.println(task);
+
+                            SendMessage sendMessage = new SendMessage();
+                            sendMessage.setText(task.toString());
+                            sendMessage.setChatId(chatId);
+
+                            try {
+                                execute(sendMessage);
+                            } catch (TelegramApiException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }
+                    try {
+                        execute(myBotService.backMessage(chatId));
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
                     }
                 } catch (SQLException e) {
                     throw new RuntimeException(e);

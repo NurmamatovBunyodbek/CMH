@@ -76,6 +76,15 @@ public class Task {
         this.status = status;
     }
 
+    public Task(String name, String description, String users, String startDate, String dueDate, String status) {
+        this.name = name;
+        this.description = description;
+        this.users = users;
+        this.startDate = startDate;
+        this.dueDate = dueDate;
+        this.status = status;
+    }
+
     public Task() {
     }
 

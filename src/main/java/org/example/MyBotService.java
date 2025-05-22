@@ -205,4 +205,25 @@ public class MyBotService {
         sendMessage.setReplyMarkup(reply);
         return sendMessage;
     }
+
+    public SendMessage backMessage(Long chatId){
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setChatId(chatId);
+        sendMessage.setText("All Tasks with this status are shown");
+
+        ReplyKeyboardMarkup reply = new ReplyKeyboardMarkup();
+        List<KeyboardRow> rowList = new ArrayList<>();
+        KeyboardRow row1 = new KeyboardRow();
+
+        KeyboardButton button1 = new KeyboardButton("⬅\uFE0F Back");
+
+        row1.add(button1);
+
+        rowList.add(row1);
+
+        reply.setKeyboard(rowList);
+        reply.setResizeKeyboard(true);
+        sendMessage.setReplyMarkup(reply);
+        return sendMessage;
+    }
 }
