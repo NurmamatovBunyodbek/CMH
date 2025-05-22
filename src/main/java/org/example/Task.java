@@ -66,6 +66,19 @@ public class Task {
         this.status = status;
     }
 
+    public Task(Integer id, String name, String description, String users, String startDate, String dueDate, String status) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.users = users;
+        this.startDate = startDate;
+        this.dueDate = dueDate;
+        this.status = status;
+    }
+
+    public Task() {
+    }
+
     @Override
     public String toString() {
         return "Task" +
