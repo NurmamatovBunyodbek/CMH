@@ -142,6 +142,13 @@ public class MyBotService {
         return sendMessage;
     }
 
+    public SendMessage taskGiver(Long chatId){
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setChatId(chatId);
+        sendMessage.setText("TaskGiver: ");
+        return sendMessage;
+    }
+
     public SendMessage statusOption(Long chatId){
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chatId);

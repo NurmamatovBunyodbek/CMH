@@ -18,6 +18,7 @@ public class MyBot extends TelegramLongPollingBot {
     Boolean startDateTask = false;
     Boolean dueDateTask = false;
     Boolean statusTask = false;
+    Boolean taskGiverTask = false;
 
     String taskName = "";
     String taskDescription = "";
@@ -25,6 +26,7 @@ public class MyBot extends TelegramLongPollingBot {
     String taskStartDate = "";
     String taskDueDate = "";
     String taskStatus = "";
+    String taskTaskGiver = "";
 
     @Override
     public void onUpdateReceived(Update update) {
@@ -69,6 +71,7 @@ public class MyBot extends TelegramLongPollingBot {
                 taskStartDate = "";
                 taskDueDate = "";
                 taskStatus = "";
+                taskTaskGiver = "";
 
                 try {
                     execute(myBotService.name(chatId));
@@ -124,12 +127,23 @@ public class MyBot extends TelegramLongPollingBot {
                     taskDueDate = text;
 
                     try {
-                        execute(myBotService.statusOption(chatId));
+                        execute(myBotService.taskGiver(chatId));
                     } catch (TelegramApiException e) {
                         throw new RuntimeException(e);
                     }
 
                     dueDateTask = false;
+                    taskGiverTask = true;
+                } else if (taskGiverTask) {
+                    taskTaskGiver = text;
+
+                    try {
+                        execute(myBotService.statusOption(chatId));
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    taskGiverTask = false;
                     statusTask = true;
                 }else if (statusTask) {
                     try {
@@ -141,7 +155,7 @@ public class MyBot extends TelegramLongPollingBot {
                         Statement statement = connection.createStatement();
                         ida++;
 
-                        String query = "insert into tasks(id,name,description,users,startdate,duedate,status) values(" + ida + ",'" + taskName + "','" + taskDescription + "','" + taskUser + "','" + taskStartDate + "','" + taskDueDate + "', '" + taskStatus + "')";
+                        String query = "insert into tasks(id,name,description,users,startdate,duedate,status,taskgiver) values(" + ida + ",'" + taskName + "','" + taskDescription + "','" + taskUser + "','" + taskStartDate + "','" + taskDueDate + "','" + taskStatus + "','" + taskTaskGiver + "')";
                         statement.execute(query);
 
                         System.out.println("Successfully created task");
@@ -182,6 +196,7 @@ public class MyBot extends TelegramLongPollingBot {
                         String startDate = resultSet.getString(5);
                         String dueDate = resultSet.getString(6);
                         String status = resultSet.getString(7);
+                        String taskGiver = resultSet.getString(8);
 
                         if(status.equals("TO DO")){
                             status = "⚪\uFE0F TO DO";
@@ -195,7 +210,7 @@ public class MyBot extends TelegramLongPollingBot {
                             status = "\uD83D\uDD34 LATE";
                         }
 
-                        Task tasks = new Task(id,name,description,users,startDate,dueDate,status);
+                        Task tasks = new Task(id,name,description,users,startDate,dueDate,status,taskGiver);
                         System.out.println(tasks);
 
                         SendMessage sendMessage = new SendMessage();
@@ -244,11 +259,12 @@ public class MyBot extends TelegramLongPollingBot {
                         String startDate = resultSet.getString(5);
                         String dueDate = resultSet.getString(6);
                         String status = resultSet.getString(7);
+                        String taskGiver = resultSet.getString(8);
 
                         if (status.equals("IN PROGRESS")) {
                             status = "\uD83D\uDFE2 IN PROGRESS";
 
-                            Task task = new Task(id,name,description,users,startDate,dueDate,status);
+                            Task task = new Task(id,name,description,users,startDate,dueDate,status,taskGiver);
                             System.out.println(task);
 
                             SendMessage sendMessage = new SendMessage();
@@ -290,11 +306,12 @@ public class MyBot extends TelegramLongPollingBot {
                         String startDate = resultSet.getString(5);
                         String dueDate = resultSet.getString(6);
                         String status = resultSet.getString(7);
+                        String taskGiver = resultSet.getString(8);
 
                         if (status.equals("URGENT")) {
                             status = "\uD83D\uDFE1 URGENT";
 
-                            Task task = new Task(id,name,description,users,startDate,dueDate,status);
+                            Task task = new Task(id,name,description,users,startDate,dueDate,status,taskGiver);
                             System.out.println(task);
 
                             SendMessage sendMessage = new SendMessage();
@@ -339,11 +356,12 @@ public class MyBot extends TelegramLongPollingBot {
                         String startDate = resultSet.getString(5);
                         String dueDate = resultSet.getString(6);
                         String status = resultSet.getString(7);
+                        String taskGiver = resultSet.getString(8);
 
                         if (status.equals("LATE")) {
                             status = "\uD83D\uDD34 LATE";
 
-                            Task task = new Task(id,name,description,users,startDate,dueDate,status);
+                            Task task = new Task(id,name,description,users,startDate,dueDate,status,taskGiver);
                             System.out.println(task);
 
                             SendMessage sendMessage = new SendMessage();

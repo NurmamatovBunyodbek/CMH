@@ -9,6 +9,7 @@ public class Task {
     private String startDate;
     private String dueDate;
     private String status;
+    private String taskGiver;
 
     public Integer getId() {
         return id;
@@ -66,6 +67,14 @@ public class Task {
         this.status = status;
     }
 
+    public String getTaskGiver() {
+        return taskGiver;
+    }
+
+    public void setTaskGiver(String taskGiver) {
+        this.taskGiver = taskGiver;
+    }
+
     public Task(Integer id, String name, String description, String users, String startDate, String dueDate, String status) {
         this.id = id;
         this.name = name;
@@ -85,6 +94,17 @@ public class Task {
         this.status = status;
     }
 
+    public Task(Integer id, String name, String description, String users, String startDate, String dueDate, String status, String taskGiver) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.users = users;
+        this.startDate = startDate;
+        this.dueDate = dueDate;
+        this.status = status;
+        this.taskGiver = taskGiver;
+    }
+
     public Task() {
     }
 
@@ -97,6 +117,7 @@ public class Task {
                 "\nUser: " + users +
                 "\nStart Date: " + startDate +
                 "\nDue Date: " + dueDate +
-                "\nStatus: " + status;
+                "\nStatus: " + status +
+                "\nTask Giver: " + taskGiver;
     }
 }
